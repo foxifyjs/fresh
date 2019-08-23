@@ -1,32 +1,64 @@
-# fresh
+# Fresh <!-- omit in toc -->
 
 [![NPM Version][npm-image]][npm-url]
-[![NPM Downloads][downloads-image]][downloads-url]
-[![Node.js Version][node-version-image]][node-version-url]
+[![Node Version][node-version-image]][node-version-url]
+[![TypeScript Version][typescript-version-image]][typescript-version-url]
+[![Tested With Jest][jest-image]][jest-url]
+[![Pull Requests][pulls-image]][pulls-url]
+[![License][license-image]][license-url]
 [![Build Status][travis-image]][travis-url]
-[![Test Coverage][coveralls-image]][coveralls-url]
+[![Coverage Status][codecov-image]][codecov-url]
+[![Package Quality][quality-image]][quality-url]
+[![Dependencies Status][dependency-status-image]][dependency-status-url]
+[![NPM Total Downloads][total-downloads-image]][total-downloads-url]
+[![NPM Monthly Downloads][monthly-downloads-image]][monthly-downloads-url]
+[![Open Issues][open-issues-image]][open-issues-url]
+[![Closed Issues][close-issues-image]][close-issues-url]
+[![Github Stars][stars-image]][stars-url]
+[![Github Forks][forks-image]][forks-url]
 
 HTTP response freshness testing
 
-## Installation
+## Table of Contents <!-- omit in toc -->
 
-This is a [Node.js](https://nodejs.org/en/) module available through the
-[npm registry](https://www.npmjs.com/). Installation is done using the
-[`npm install` command](https://docs.npmjs.com/getting-started/installing-npm-packages-locally):
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Usage](#usage)
+- [Known Issues](#known-issues)
+- [Example](#example)
+  - [API usage](#api-usage)
+  - [Using with Node.js http server](#using-with-nodejs-http-server)
+- [Versioning](#versioning)
+- [Changelog](#changelog)
+- [Authors](#authors)
+- [License](#license)
 
+## Getting Started
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/en/download) 0.8 or higher is required.
+
+### Installation
+
+```bash
+npm i -s fresh
 ```
-$ npm install fresh
+
+### Usage
+
+- TypeScript:
+
+```typescript
+import fresh from "fresh";
 ```
 
-## API
+- JavaScript:
 
-<!-- eslint-disable no-unused-vars -->
-
-```js
-var fresh = require('fresh')
+```javascript
+const fresh = require("fresh").default;
 ```
-
-### fresh(reqHeaders, resHeaders)
 
 Check freshness of the response using request and response headers.
 
@@ -57,63 +89,96 @@ links to further reading on this Safari bug.
 
 ### API usage
 
-<!-- eslint-disable no-redeclare, no-undef -->
-
-```js
-var reqHeaders = { 'if-none-match': '"foo"' }
-var resHeaders = { 'etag': '"bar"' }
-fresh(reqHeaders, resHeaders)
+```typescript
+const reqHeaders = { "if-none-match": '"foo"' };
+const resHeaders = { etag: '"bar"' };
+fresh(reqHeaders, resHeaders);
 // => false
 
-var reqHeaders = { 'if-none-match': '"foo"' }
-var resHeaders = { 'etag': '"foo"' }
-fresh(reqHeaders, resHeaders)
+const reqHeaders = { "if-none-match": '"foo"' };
+const resHeaders = { etag: '"foo"' };
+fresh(reqHeaders, resHeaders);
 // => true
 ```
 
 ### Using with Node.js http server
 
-```js
-var fresh = require('fresh')
-var http = require('http')
+```typescript
+import fresh from "fresh";
+import http from "http";
 
-var server = http.createServer(function (req, res) {
+const server = http.createServer((req, res) => {
   // perform server logic
   // ... including adding ETag / Last-Modified response headers
 
   if (isFresh(req, res)) {
     // client has a fresh copy of resource
-    res.statusCode = 304
-    res.end()
-    return
+    res.statusCode = 304;
+    return res.end();
   }
 
   // send the resource
-  res.statusCode = 200
-  res.end('hello, world!')
-})
+  res.statusCode = 200;
+  res.end("hello, world!");
+});
 
-function isFresh (req, res) {
+function isFresh(req, res) {
   return fresh(req.headers, {
-    'etag': res.getHeader('ETag'),
-    'last-modified': res.getHeader('Last-Modified')
-  })
+    etag: res.getHeader("ETag"),
+    "last-modified": res.getHeader("Last-Modified"),
+  });
 }
 
-server.listen(3000)
+server.listen(3000);
 ```
+
+## Versioning
+
+We use [SemVer](http://semver.org) for versioning. For the versions available, see the [tags on this repository](https://github.com/foxifyjs/odin/tags).
+
+## Changelog
+
+See the [CHANGELOG.md](CHANGELOG.md) file for details
+
+## Authors
+
+- [**Ardalan Amini**](https://ardalanamini.com) - _Core Maintainer_ - [@ardalanamini](https://github.com/ardalanamini)
+
+See also the list of [contributors](https://github.com/foxifyjs/odin/contributors) who participated in this project.
 
 ## License
 
-[MIT](LICENSE)
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
 
-[npm-image]: https://img.shields.io/npm/v/fresh.svg
-[npm-url]: https://npmjs.org/package/fresh
-[node-version-image]: https://img.shields.io/node/v/fresh.svg
-[node-version-url]: https://nodejs.org/en/
-[travis-image]: https://img.shields.io/travis/jshttp/fresh/master.svg
-[travis-url]: https://travis-ci.org/jshttp/fresh
-[coveralls-image]: https://img.shields.io/coveralls/jshttp/fresh/master.svg
-[coveralls-url]: https://coveralls.io/r/jshttp/fresh?branch=master
-[downloads-image]: https://img.shields.io/npm/dm/fresh.svg
-[downloads-url]: https://npmjs.org/package/fresh
+[npm-image]: https://img.shields.io/npm/v/@foxify/fresh.svg
+[npm-url]: https://www.npmjs.com/package/@foxify/fresh
+[node-version-image]: https://img.shields.io/node/v/@foxify/fresh.svg
+[node-version-url]: https://nodejs.org
+[typescript-version-image]: https://img.shields.io/npm/types/@foxify/fresh.svg
+[typescript-version-url]: https://www.typescriptlang.org
+[jest-image]: https://img.shields.io/badge/tested_with-jest-99424f.svg
+[jest-url]: https://github.com/facebook/jest
+[pulls-image]: https://img.shields.io/badge/PRs-Welcome-brightgreen.svg
+[pulls-url]: https://github.com/foxifyjs/fresh/pulls
+[license-image]: https://img.shields.io/github/license/foxifyjs/fresh.svg
+[license-url]: https://github.com/foxifyjs/fresh/blob/master/LICENSE
+[travis-image]: https://api.travis-ci.com/foxifyjs/fresh.svg?branch=master
+[travis-url]: https://travis-ci.com/foxifyjs/fresh
+[codecov-image]: https://codecov.io/gh/foxifyjs/fresh/branch/master/graph/badge.svg
+[codecov-url]: https://codecov.io/gh/foxifyjs/fresh
+[quality-image]: http://npm.packagequality.com/shield/%40foxify%2Fodin.svg
+[quality-url]: http://packagequality.com/#?package=@foxify/fresh
+[dependency-status-image]: https://david-dm.org/foxifyjs/fresh.svg
+[dependency-status-url]: https://david-dm.org/foxifyjs/fresh
+[total-downloads-image]: https://img.shields.io/npm/dt/@foxify/fresh.svg
+[total-downloads-url]: https://www.npmjs.com/package/@foxify/fresh
+[monthly-downloads-image]: https://img.shields.io/npm/dm/@foxify/fresh.svg
+[monthly-downloads-url]: https://www.npmjs.com/package/@foxify/fresh
+[open-issues-image]: https://img.shields.io/github/issues-raw/foxifyjs/fresh.svg
+[open-issues-url]: https://github.com/foxifyjs/fresh/issues?q=is%3Aopen+is%3Aissue
+[close-issues-image]: https://img.shields.io/github/issues-closed-raw/foxifyjs/fresh.svg
+[close-issues-url]: https://github.com/foxifyjs/fresh/issues?q=is%3Aissue+is%3Aclosed
+[stars-image]: https://img.shields.io/github/stars/foxifyjs/fresh.svg?style=social
+[stars-url]: https://github.com/foxifyjs/fresh
+[forks-image]: https://img.shields.io/github/forks/foxifyjs/fresh.svg?style=social&label=Fork
+[forks-url]: https://github.com/foxifyjs/fresh
