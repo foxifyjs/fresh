@@ -38,7 +38,7 @@ HTTP response freshness testing
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/en/download) 0.8 or higher is required.
+- [Node.js](https://nodejs.org/en/download) 8 or higher is required.
 
 ### Installation
 
