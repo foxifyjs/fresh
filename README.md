@@ -141,7 +141,7 @@ npm run benchmarks
 
 ## Versioning
 
-We use [SemVer](http://semver.org) for versioning. For the versions available, see the [tags on this repository](https://github.com/foxifyjs/odin/tags).
+We use [SemVer](http://semver.org) for versioning. For the versions available, see the [tags on this repository](https://github.com/foxifyjs/fresh/tags).
 
 ## Changelog
 
@@ -151,7 +151,7 @@ See the [CHANGELOG.md](CHANGELOG.md) file for details
 
 - [**Ardalan Amini**](https://ardalanamini.com) - _Core Maintainer_ - [@ardalanamini](https://github.com/ardalanamini)
 
-See also the list of [contributors](https://github.com/foxifyjs/odin/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/foxifyjs/fresh/contributors) who participated in this project.
 
 ## License
 
@@ -173,7 +173,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 [travis-url]: https://travis-ci.com/foxifyjs/fresh
 [codecov-image]: https://codecov.io/gh/foxifyjs/fresh/branch/master/graph/badge.svg
 [codecov-url]: https://codecov.io/gh/foxifyjs/fresh
-[quality-image]: http://npm.packagequality.com/shield/%40foxify%2Fodin.svg
+[quality-image]: http://npm.packagequality.com/shield/%40foxify%2Ffresh.svg
 [quality-url]: http://packagequality.com/#?package=@foxify/fresh
 [dependency-status-image]: https://david-dm.org/foxifyjs/fresh.svg
 [dependency-status-url]: https://david-dm.org/foxifyjs/fresh
