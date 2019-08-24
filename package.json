@@ -1,6 +1,6 @@
 {
   "name": "@foxify/fresh",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "HTTP response freshness testing",
   "author": {
     "name": "Ardalan Amini",
@@ -32,12 +32,15 @@
     "lint": "tslint -p tsconfig.json -c tslint.json --exclude '**/*.d.ts'",
     "test": "jest",
     "coverage": "npm test -- --coverage",
-    "codecov": "npm run coverage -- --runInBand && codecov"
+    "codecov": "npm run coverage -- --runInBand && codecov",
+    "benchmarks": "find benchmarks -name '*.js' -exec benchmarks/start.sh {} \\;"
   },
   "devDependencies": {
     "@types/jest": "^24.0.18",
     "@types/node": "^12.7.2",
+    "benchmark": "^2.1.4",
     "codecov": "^3.5.0",
+    "fresh": "^0.5.2",
     "jest": "^24.9.0",
     "ts-jest": "^24.0.2",
     "tslint": "^5.19.0",

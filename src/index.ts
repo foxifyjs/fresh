@@ -30,33 +30,21 @@ export default function fresh(
 
   // if-none-match
   if (noneMatch && noneMatch !== "*") {
-    const etag = resHeaders.etag;
+    const etag = resHeaders.etag as string | undefined;
 
-    if (!etag) return false;
-
-    const matches = parseTokenList(noneMatch);
-    let etagStale = true;
-
-    for (let i = 0; i < matches.length; i++) {
-      const match = matches[i];
-
-      if (match === etag || match === `W/${etag}` || `W/${match}` === etag) {
-        etagStale = false;
-        break;
-      }
-    }
-
-    if (etagStale) return false;
+    if (!etag || isStale(etag, noneMatch)) return false;
   }
 
   // if-modified-since
   if (modifiedSince) {
-    const lastModified = resHeaders["last-modified"] as string;
-    const modifiedStale =
-      !lastModified ||
-      !(parseHttpDate(lastModified) <= parseHttpDate(modifiedSince));
+    const lastModified = resHeaders["last-modified"] as string | undefined;
 
-    if (modifiedStale) return false;
+    if (
+      !lastModified ||
+      !(parseHttpDate(lastModified) <= parseHttpDate(modifiedSince))
+    ) {
+      return false;
+    }
   }
 
   return true;
@@ -67,31 +55,24 @@ export default function fresh(
  *
  * @private
  */
-function parseHttpDate(date: string) {
-  const timestamp = date && Date.parse(date);
-
-  // istanbul ignore next: guard against date.js Date.parse patching
-  return typeof timestamp === "number" ? timestamp : NaN;
-}
+const parseHttpDate = Date.parse;
 
 /**
- * Parse a HTTP token list.
+ * Check if the request is stale.
  *
  * @private
  */
-function parseTokenList(str: string) {
-  const list = [];
+function isStale(etag: string, noneMatch: string) {
   let start = 0;
   let end = 0;
 
-  // gather tokens
-  for (let i = 0, len = str.length; i < len; i++) {
-    switch (str.charCodeAt(i)) {
+  for (let i = 0, len = noneMatch.length; i < len; i++) {
+    switch (noneMatch.charCodeAt(i)) {
       case 0x20 /*   */:
         if (start === end) start = end = i + 1;
         break;
       case 0x2c /* , */:
-        list.push(str.substring(start, end));
+        if (compareETags(etag, noneMatch.substring(start, end))) return false;
         start = end = i + 1;
         break;
       default:
@@ -100,8 +81,16 @@ function parseTokenList(str: string) {
     }
   }
 
-  // final token
-  list.push(str.substring(start, end));
+  if (compareETags(etag, noneMatch.substring(start, end))) return false;
 
-  return list;
+  return true;
+}
+
+/**
+ * Check if the etag matches the string.
+ *
+ * @private
+ */
+function compareETags(etag: string, str: string) {
+  return str === etag || str === `W/${etag}` || `W/${str}` === etag;
 }

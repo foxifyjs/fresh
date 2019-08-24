@@ -29,6 +29,7 @@ HTTP response freshness testing
 - [Example](#example)
   - [API usage](#api-usage)
   - [Using with Node.js http server](#using-with-nodejs-http-server)
+- [Benchmarks](#benchmarks)
 - [Versioning](#versioning)
 - [Changelog](#changelog)
 - [Authors](#authors)
@@ -130,6 +131,12 @@ function isFresh(req, res) {
 }
 
 server.listen(3000);
+```
+
+## Benchmarks
+
+```bash
+npm run benchmarks
 ```
 
 ## Versioning
